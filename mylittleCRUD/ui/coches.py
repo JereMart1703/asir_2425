@@ -1,8 +1,6 @@
 from domain.modelo.coche import Coche
 from domain.servicios.cochesServicios import CochesServicios
 
-
-
 def main():
     cochesServicios : CochesServicios = CochesServicios()
     while True:
@@ -13,13 +11,22 @@ def main():
         print(" 5. Salir")
         opcion = input("Introduce una opcion: ")
         if (opcion == "1"):
-            cochesServicios.crearCoche()
+            matricula :str = input("dime la matricula")
+            color :str = input("dime el color")
+            marca :str = input("dime la marca")
+            modelo :str = input("dime el modelo")
+            coche_nuevo : Coche = Coche(matricula, marca, modelo, color)
+            cochesServicios.crear_coche(coche_nuevo)
+            print("Coche creado")           
         elif (opcion == "2"):
-            cochesServicios.listar_coches()
+            coches : list[Coche] = cochesServicios.listar_coches()
+            for coche in coches:
+                print(coche)
         elif (opcion == "3"):
-            cochesServicios.buscarCoche()
+            print("TODO")
         elif (opcion == "4"):
-            cochesServicios.borrarCoche()
+            matricula :str = input("dime la matricula")
+            cochesServicios.cambiar_coche(matricula)
         elif (opcion == "5"):
             break
         else:

@@ -7,6 +7,9 @@ class Coche:
         self.color = color
 
 
+    def __str__(self):
+        return f"Matricula: {self.matricula}, Marca: {self.marca}, Modelo: {self.modelo}, Color: {self.color}"
+
     # comparar por defecto por matricula
     def __eq__(self, other):
         return self.matricula == other.matricula

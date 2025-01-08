@@ -1,7 +1,7 @@
 <html>
 
 <body>
-
+{%block content %}
     <h1 >{{ nombre }}</h1>
 
     {% for student in students %}
@@ -9,6 +9,8 @@
       <em>{{ student.name }}:</em> {{ student.score }}/{{ max_score }}
     </li>
     {% endfor %}
+
+{% endblock content %}
 
     
 </body>

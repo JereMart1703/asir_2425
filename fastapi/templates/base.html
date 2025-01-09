@@ -1,17 +1,26 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static',path='css/style.css') }}" />
+     {% block css %}{% endblock %}
+    {% block head %}{% endblock %}
+</head>
 <body>
-{%block content %}
-    <h1 >{{ nombre }}</h1>
+  <h1>SIEMPRE ESTA</h1>
 
-    {% for student in students %}
-    <li>
-      <em>{{ student.name }}:</em> {{ student.score }}/{{ max_score }}
-    </li>
-    {% endfor %}
-
-{% endblock content %}
-
-    
+  {% block content %}
+  
+  {% endblock %}
+  
+  {% block footer %}
+    <footer>
+        <p>Footer</p>
+    </footer>
+  {% endblock %}
+   
 </body>
+</html>
 </html>

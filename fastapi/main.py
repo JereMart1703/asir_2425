@@ -1,6 +1,12 @@
+from data.database import database
+
+from data.modelo.alumno import Alumno
+from data.dao.dao_alumnos import DaoAlumnos
+
 from typing import Union
 
 from fastapi import FastAPI, Request
+
 
 
 from fastapi.responses import HTMLResponse
@@ -18,7 +24,9 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return DaoAlumnos().get_all(database)
+    
+
 
 
 @app.get("/test", response_class=HTMLResponse)

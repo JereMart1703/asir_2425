@@ -1,0 +1,20 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>FastAPI</title>
+  <link rel="stylesheet" href="{{ url_for('static',path="css/style.css") }}" />
+ 
+</head>
+<body>
+
+   {% for alumno in alumnos %}
+        {{alumno.nombre}}<br>
+   {% endfor %}
+
+   <form action="{{ url_for('add_alumnos') }}" method="post">
+        <input type="text" name="nombre" placeholder="Nombre">
+        <input type="submit" value="Enviar">
+
+    
+</body>
+</html>

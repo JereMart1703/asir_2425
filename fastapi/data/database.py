@@ -13,7 +13,7 @@ import mysql.connector
 
 # db = list()
 database = mysql.connector.connect( # LLAMAMOS AL FUNCION CONNECT PARA CONECTARNOS
-    host ='10.0.0.1',
+    host ='informatica.iesquevedo.es',
     port = 3333,
     ssl_disabled = True,
     user ='root', #USUARIO QUE USAMOS NOSOTROS

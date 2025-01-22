@@ -21,6 +21,18 @@ class DaoAlumnos:
     
     def insert(self, db, nombre: str):
         cursor = db.cursor()
-        cursor.execute(f"INSERT INTO alumnos (nombre) VALUES ('{nombre}')")
+        sql = ("INSERT INTO alumnos (nombre) values (%s) ")
+        data = (nombre,)
+        cursor.execute(sql,data)
+        # cursor.execute(f"INSERT INTO alumnos (nombre) VALUES ('{nombre}')")
+        db.commit()
+        cursor.close()
+
+    def delete(self, db, id: str):
+        cursor = db.cursor()
+        sql = ("DELETE FROM  alumnos where id = (%s) ")
+        data = (id,)
+        cursor.execute(sql,data)
+        # cursor.execute(f"INSERT INTO alumnos (nombre) VALUES ('{nombre}')")
         db.commit()
         cursor.close()

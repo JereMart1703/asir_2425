@@ -27,19 +27,35 @@ def read_root():
     return DaoAlumnos().get_all(database)
     
 
-@app.get("/alumnos")
-def get_alumnos(request: Request):
+@app.get("/alumnos/{alumno_id}")
+def get_alumnos(request: Request,alumno_id:str,nombre : str = "pepe",otro: int  = 1):
     alumnos =  DaoAlumnos().get_all(database)
+   
+
     return templates.TemplateResponse(
-    request=request, name="alumnos.html", context={"alumnos": alumnos}                                                      
+    request=request, name="alumnos.html", context={"alumnos": alumnos,"nombre": nombre}                                                      
 )
    
    
-   
 
-@app.post("/alumnos/add")
-@app.get("/alumnos/add")
-def add_alumnos(request: Request, nombre: Annotated[str, Form()]):
+@app.get("/deletealumnos/{alumno_id}")
+def delete_alumnos(request: Request,alumno_id:str):
+    dao = DaoAlumnos()
+    dao.delete(database, alumno_id)
+    
+    alumnos =  dao.get_all(database)
+    return templates.TemplateResponse(
+    request=request, name="alumnos.html", context={"alumnos": alumnos}                                                      
+)
+
+@app.post("/addalumnos")
+@app.get("/addalumnos")
+def add_alumnos(request: Request, nombre: Annotated[str, Form()] = None):
+    if nombre is None:
+        return templates.TemplateResponse(
+        request=request, name="alumnos.html", context={"nombre": "pepe"}
+        )
+    
     dao = DaoAlumnos()
     dao.insert(database, nombre)
     

@@ -3,6 +3,8 @@ from typing import Annotated
 
 from data.dao.dao_alumnos import DaoAlumnos
 
+from data.modelo.menu import Menu
+
 from typing import Union
 
 from fastapi import FastAPI, Request,Form
@@ -23,18 +25,21 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
-def read_root():
-    return DaoAlumnos().get_all(database)
+def read_root(request: Request):
+    menu = Menu(True,False)
+    return templates.TemplateResponse(
+    request=request, name="index.html",context={"menu": menu})
     
 
-@app.get("/alumnos/{alumno_id}")
-def get_alumnos(request: Request,alumno_id:str,nombre : str = "pepe",otro: int  = 1):
+@app.get("/alumnos")
+def get_alumnos(request: Request,nombre : str = "pepe",otro: int  = 1):
+
+    menu = Menu(True,True)
     alumnos =  DaoAlumnos().get_all(database)
    
 
     return templates.TemplateResponse(
-    request=request, name="alumnos.html", context={"alumnos": alumnos,"nombre": nombre}                                                      
-)
+    request=request, name="alumnos.html", context={"menu": menu,"alumnos": alumnos,"nombre": nombre} )
    
    
 
@@ -48,8 +53,25 @@ def delete_alumnos(request: Request,alumno_id:str):
     request=request, name="alumnos.html", context={"alumnos": alumnos}                                                      
 )
 
+  
+
+@app.post("/delalumnos")
+def del_alumnos(request: Request,alumno_id:Annotated[str, Form()] ):
+    print("hlhl")
+    dao = DaoAlumnos()
+    dao.delete(database, alumno_id)
+    
+    alumnos =  dao.get_all(database)
+    return templates.TemplateResponse(
+    request=request, name="alumnos.html", context={"alumnos": alumnos} )
+
+@app.get("/formaddalumnos")
+def form_add_alumnos(request: Request):
+    return templates.TemplateResponse(
+    request=request, name="formaddAlumnos.html"
+    )
+
 @app.post("/addalumnos")
-@app.get("/addalumnos")
 def add_alumnos(request: Request, nombre: Annotated[str, Form()] = None):
     if nombre is None:
         return templates.TemplateResponse(
@@ -61,7 +83,7 @@ def add_alumnos(request: Request, nombre: Annotated[str, Form()] = None):
     
     alumnos =  dao.get_all(database)
     return templates.TemplateResponse(
-    request=request, name="alumnos.html", context={"alumnos": alumnos}                                                      
+    request=request, name="formaddAlumnos.html", context={"alumnos": alumnos}                                                      
 )    
 
 @app.get("/test", response_class=HTMLResponse)

@@ -11,10 +11,7 @@ class DaoAlumnos:
         equipos : list[Alumno]= list()
         for equipo in equipos_en_db:
             alumno = Alumno(equipo[0], equipo[1])
-            print(alumno.nombre)
             equipos.append(alumno)
-            print(len(equipos))
-
         cursor.close()
         
         return equipos

@@ -8,6 +8,16 @@
 </head>
 
 <body>
+     {% if menu %}
+     {% if menu.home %}
+     <a href="{{ url_for('get_alumnos') }}">ver pupils</a>
+   {% endif %}
+   {% if menu.add %}
+     <a href="{{ url_for('form_add_alumnos') }}">add</a>
+   {% endif %}
+   {% endif %}
+   
+   
 
      {% if nombre %}
      <h1>Hola {{nombre}}</h1>
@@ -31,6 +41,20 @@
      <form action="{{ url_for('add_alumnos') }}" method="post">
           <input type="text" name="nombre" placeholder="Nombre">
           <input type="submit" value="Enviar">
+     </form>
+
+          <form action="{{ url_for('del_alumnos') }}" method="post">
+
+
+               <select  name="alumno_id">
+                    {% for alumno in alumnos %}  
+<option value="{{alumno.id}}">{{alumno.nombre}}</option>
+                    {% endfor%}
+
+               </select>
+               
+               <input type="submit" value="Borrar">
+          </form>
 
 
 </body>

@@ -9,10 +9,13 @@
 
     <h1 >{{ nombre }}</h1>
 
-   
-    <a href="{{ url_for('read_item') }}">Home</a>
-    <a href="{{ url_for('static',path="css/style.css") }}">jjj</a>
-
+    {% if menu.home %}
+      <a href="{{ url_for('get_alumnos') }}">ver pupils</a>
+    {% endif %}
+    {% if menu.add %}
+      <a href="{{ url_for('form_add_alumnos') }}">add</a>
+    {% endif %}
+    
     
 </body>
 </html>

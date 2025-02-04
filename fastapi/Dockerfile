@@ -14,7 +14,7 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 
 
 # PROD stage
-FROM python:${PYTHON_VERSION}-slim-buster AS prod
+FROM python:${PYTHON_VERSION}-slim-bookworm AS prod
 
 WORKDIR /app
 COPY . /app
@@ -24,19 +24,18 @@ COPY --from=build /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
 
-CMD uvicorn app:app --host 0.0.0.0 --port 80
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"] 
 
 
 
-# DEV stage
-FROM python:${PYTHON_VERSION}-slim-buster AS dev
+# # DEV stage
+# FROM python:${PYTHON_VERSION}-slim-buster AS dev
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=build /app/wheels /wheels
-COPY --from=build /app/requirements.txt .
+# COPY --from=build /app/wheels /wheels
+# COPY --from=build /app/requirements.txt .
 
-RUN pip install --no-cache /wheels/*
-RUN pip install debugpy
+# RUN pip install --no-cache /wheels/* && pip install debugpy
 
-CMD python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:9226 -m uvicorn app:app --reload --host ${BACKEND_HOST} --port ${PORT}
+# CMD python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:9226 -m uvicorn app:app --reload --host ${BACKEND_HOST} --port ${PORT}
